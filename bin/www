@@ -1,6 +1,8 @@
 #!/usr/bin/env node
+console.log = () => {}
 
 require('dotenv').config()
+require('../util.js').config()
 require('../states.js').config()
 
 /**

@@ -1,20 +1,29 @@
-const Checker = require('./Checker.js')
+const axios = require('axios'),
+         Checker = require('./Checker/index.js'),
+            e = process.env;
 
 function main (wsServer) {
 
-    wsServer.on('connection', (ws, messageCon) => {
+    wsServer.on('connection', (ws, eventCon) => {
         
         //send immediatly a feedback to the incoming connection    
         console.log('New incoming connection on Websocket.')
     
         //connection is up, let's add a simple simple event
-        ws.on('message', async (message) => {
+        ws.on('message', async (event) => {
 
-            message = JSON.parse(message.toString())
+            // events form front-end
+            let ev = JSON.parse(event.toString())
 
-            console.log('message', message)
-            
-            if (message.intent === '/check-infos') {
+            // an event handler 
+            if (ev.name === 'pick-infos') {
+
+                if (global.isChecking) {    
+                    ws.send(JSON.stringify({
+                        name: 'error',
+                        data: 'A check process is already running. Wait.'
+                    }))
+                }
 
                 if (!global.isChecking) {
                     
@@ -24,51 +33,48 @@ function main (wsServer) {
 
                     console.log('Initializing checker')
                     
-                    global.isCheking = true
+                    global.isChecking = true;
                     
                     // construct checker instance 
-                    // message.data = array of infocc text
-                    let checker = new Checker(message.data)
+                    // ev.data = array of infocc text
+                    let checker = new Checker(ev.data)
                     
                     // handles each info checked
-                    checker.on('check', parsedInfo => {
-                        ws.send({
-                            întent: '/new-info',
-                            data: parsedInfo,
-                            text: 'New info checked'
-                        })
+                    checker.on('check', infoParsed => {
+                        ws.send(JSON.stringify({ 
+                            name: 'check', 
+                            data: infoParsed 
+                        })) // no front >>> ev|
+                    })
+
+                    // handles check error
+                    checker.on('check-error', error => {
+                        ws.send(JSON.stringify({ 
+                                name: 'error', data: error 
+                        }))
                     })
 
                     // when checker checks all infos
                     checker.on('stop', () => {
-
-                        global.isCheking = false;
-
-                        ws.send({
-                            intent: '/checker-finish',
-                            text: 'Checker finished!'
-                        })
+                        
+                        global.isChecking = false;
+                        
+                        ws.send(JSON.stringify({ 
+                                name: 'check-finish', 
+                                data: null 
+                        }))
                     })
 
                     // starts checker
-                    checker.start()
+                    await checker.start()
 
                     // --------------------------------
                     // ----------- main algorithm - end
                     // --------------------------------
                 }
-                
-                if (global.isChecking) {
-                    
-                    ws.send({
-                        error: 'A check process is already running. Wait.'
-                    })
-
-                    return;
-                }
             }
 
-            if (message.intent === '/other') {
+            if (ev.name === '/other') {
 
             }
 
