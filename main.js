@@ -29,10 +29,9 @@ function main (wss) {
             data: global.session
         }))
 
-        console.info('global.session', global.session)
-
         // send immediatly a feedback to the incoming connection    
         console.log('New incoming connection on Websocket')
+        console.info('global.session', global.session)
 
         // -------------------------------------------------
         // connection is up, let's add a simple simple event
@@ -69,7 +68,7 @@ function main (wss) {
                 
                 // construct checker instance 
                 // ev.data = array of infocc text
-                let checker = new Checker(ev.data)
+                let checker = global.checker = new Checker(ev.data)
                 
                 // handles each info checked
                 checker.on('check', infoParsed => {
@@ -96,9 +95,7 @@ function main (wss) {
 
                 // when checker checks all infos
                 checker.on('stop', stopmsg => {
-
-                    state.isChecking = false;
-                    
+                    state.isChecking = false;    
                     ws.send(JSON.stringify({ 
                         name: 'stop', 
                         data: { message: stopmsg }
@@ -111,6 +108,13 @@ function main (wss) {
                 // --------------------------------
                 // ----------- main algorithm - end
                 // --------------------------------
+            }
+
+            if (ev.name === 'stop-checks') {
+                if (global.checker) {
+                    await global.checker.emit('stop', 
+                        'Cancelamento de processo solicitado')
+                }
             }
 
         })

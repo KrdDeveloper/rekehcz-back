@@ -1,4 +1,4 @@
-module.exports = async (info) => {
+module.exports = async function (info) {
 	
 	const db = await this.mongoClient.db('rekehcz'),
 		  collection = db.collection('checks')

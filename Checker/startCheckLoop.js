@@ -4,6 +4,10 @@ module.exports = async function () {
 
 	for (const info of this.infos) {
 
+		if (!state.isChecking) {
+			return;
+		}
+
 		if (session.remainingMinutes < 1) {
             await this.emit('stop', 'Tempo de sessão expirado')
             return;
@@ -12,10 +16,10 @@ module.exports = async function () {
 		const infoStored = await this.checkStored(info)
 
 		if (infoStored) {
-			util.sleep(12000)
+			util.sleep(6000)
 			await this.emit('check', infoStored)
 		} else if (info.status === 'DEAD') {
-			util.sleep(12000)
+			util.sleep(6000)
 			await this.emit('check', info)
 		} else {
 			
@@ -48,19 +52,33 @@ module.exports = async function () {
 					await this.changeProxyServerIp()
 
 					// above wont work without this
-					util.sleep(12000)
+					util.sleep(6000)
 
 					try {
 
 						this.emit('check-status-update', 
-									'Realizando cobrança no Gateway', 75)
+									'Realizando cobrança no Gateway', 65)
 
 						// finally performs stripe charge
 						await this.stripeCharge(info)
 
 						this.emit('check-status-update', 
-									'Check concluído', 100)
-					
+									'Finalizando...', 75)
+
+						// since info dindt fall on first conditional (checkStored)
+						// and is a live, store it on mongo collection server
+
+						try {
+							await this.storeCheck(info)
+						} catch (error) {
+							this.emit('check-error', 
+								error.toString(error), 
+									'Fail at this.storeCheck()')
+						} finally {
+							this.emit('check-status-update', 
+										'Check concluído', 100)
+						}
+
 					} catch (error) {
 						this.emit('check-error', 
 							error.toString(error), 
@@ -74,8 +92,7 @@ module.exports = async function () {
 				}
 
 			} catch (error) {
-				this.emit(
-					'check-error', 
+				this.emit('check-error', 
 						error.toString(), 
 							'Fail at this.getBinData()')
 			}
