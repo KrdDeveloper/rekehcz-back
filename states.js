@@ -2,6 +2,11 @@ module.exports = {
 	
 	config () {
 
-		global.isChecking = false;
+		global.state = {
+			
+			session: null,
+			isChecking: false,
+			singleSocket: null
+		}
 	}
 }

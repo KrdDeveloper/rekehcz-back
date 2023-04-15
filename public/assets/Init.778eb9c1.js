@@ -1,0 +1,1 @@
+import{ae as e,al as o,o as t,ah as a}from"./index.484418bb.js";const s={name:"Init",methods:{setupVisitor(){}},created(){setTimeout(()=>{window.location.replace(window.location.href+"dash")},3e3)}},n=a("small",null," Carregando... ",-1),c=[n];function r(i,d,l,_,p,m){return t(),o("div",null,c)}const f=e(s,[["render",r]]);export{f as default};
