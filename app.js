@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 const routekey = util.genkey(),
-		link = `csliathz.xyz:${e.PORT}/${routekey}`,
+		link = `http://csliathz.xyz:${e.PORT}/${routekey}`,
 			qrlink = QRCode.toString(link, 
 				{ type:'terminal' }, (err, url) => { url })
 
