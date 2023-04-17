@@ -1,15 +1,8 @@
 OK - termina sistema single socket no server
-INDO - proteao contra saida do site / INSTEAD request close another tab on front
+OK - proteao contra saida do site / INSTEAD request close another tab on front
 OK - guarda ipnat e visitorid como localStore
-- CAPTURAR AQUELE ERRO DE CLOSED NO FRONT PEGA ELE E TOAST
+OK - CAPTURAR AQUELE ERRO DE CLOSED NO FRONT PEGA ELE E TOAST
 OK - sistema de fila qeee pras array de cc
-- fazer pilha historico de toda ssa s cccsx ja testadas pra nao passar dnv no gateway apenas por como dead
-INDO - CRIAR LOGO UM AMBIANTE DE PRODUCAO COM SEU .env
-- criar monter esquema de deploy vie git
-
-* DAS Q VC ABRE IGUAIS NORMAALMENTE SO A PRIMEIRA A  TER SIDO ABEETA 
-	... OU A ULTIMA Q SOBRAR DEPOIS Q DELETAR TODAS AS OUTRAS
-
-funcionando sistema anti "mais de uma launch", faz download 
-para de responder enquanto ta na do visitor/wb atual quando clica em check
-espera a principal fechar as portas para
+OK - fazer pilha historico de toda ssa s cccsx ja testadas pra nao passar dnv no gateway apenas por como dead
+OK - CRIAR LOGO UM AMBIANTE DE PRODUCAO COM SEU .env
+INDO - criar monter esquema de deploy vie git

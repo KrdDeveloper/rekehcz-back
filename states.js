@@ -5,8 +5,7 @@ module.exports = {
 		global.state = {
 			
 			session: null,
-			isChecking: false,
-			singleSocket: null
+			isChecking: false
 		}
 	}
 }
