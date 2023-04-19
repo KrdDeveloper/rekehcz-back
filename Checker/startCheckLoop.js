@@ -64,12 +64,12 @@ module.exports = async function () {
 
 						if (infoCharged.status === "DEAD") {
 							await this.emit('check-status-update', 
-										'DEAD', 100)
+											'DEAD', 100)
 							return;
 						}
 
 						if (infoCharged.status === "LIVE") {
-							await this.emit('check', info)
+							await this.emit('check', infoCharged)
 						}
 
 						await this.emit('check-status-update', 
@@ -79,7 +79,7 @@ module.exports = async function () {
 						// and is a live, store it on mongo collection server
 						try {
 
-							await this.storeCheck(info)
+							await this.storeCheck(infoCharged)
 							await this.emit('check-status-update', 
 											'Check concluído', 100)
 						} catch (error) {

@@ -19,8 +19,8 @@ const routekey = util.genkey(),
 
 app.use(`/${routekey}`, express.static(path.join(__dirname, 'public')));
 
+console.info('qrlink', '\n', qrlink)
 console.info('routekey', routekey)
 console.info('link', link)
-console.info('qrlink', '\n', qrlink)
 
 module.exports = app;

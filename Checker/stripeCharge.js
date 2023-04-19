@@ -52,12 +52,10 @@ async function stripeCharge (info) {
 		info.status = 'DEAD'
 		info.error = error.code
 
-		// console.error(error)
+		console.error(error)
 
 	} finally {
-		
 		return info;
-
 	}
 
 
