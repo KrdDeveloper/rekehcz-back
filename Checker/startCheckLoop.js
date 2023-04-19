@@ -33,6 +33,10 @@ module.exports = async function () {
 
 		async function main () {
 
+			if (info.month.length === 4) {
+				info.month = info.month.slice(2)
+			}
+
 			try {
 
 				await this.emit('check-status-update', 
@@ -63,31 +67,33 @@ module.exports = async function () {
 						const infoCharged = await this.stripeCharge(info)
 
 						if (infoCharged.status === "DEAD") {
-							await this.emit('check-status-update', 
-											'DEAD', 100)
+							await this.emit('check-status-update', 'DEAD', 100)
+							await this.emit('check', infoCharged)
 							return;
 						}
 
 						if (infoCharged.status === "LIVE") {
-							await this.emit('check', infoCharged)
-						}
 
-						await this.emit('check-status-update', 
+							await this.emit('check', infoCharged)
+							await this.emit('check-status-update', 
 										'Finalizando...', 75)
 
-						// since info dindt fall on first conditional (checkStored)
-						// and is a live, store it on mongo collection server
-						try {
+							// since info dindt fall on first conditional (checkStored)
+							// and is a live, store it on mongo collection server
+							try {
 
-							await this.storeCheck(infoCharged)
-							await this.emit('check-status-update', 
-											'Check concluído', 100)
-						} catch (error) {
-							await this.emit('check-error', 
-								error.toString(error), 
-									'Fail at this.storeCheck()')
+								await this.storeCheck(infoCharged)
+								await this.emit('check-status-update', 
+												'Check concluído', 100)
+							} catch (error) {
+								await this.emit('check-error', 
+									error.toString(error), 
+										'Fail at this.storeCheck()')
+							}
+
 						}
 
+						
 					} catch (error) {
 						await this.emit('check-error', 
 							error.toString(error), 

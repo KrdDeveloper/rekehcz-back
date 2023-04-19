@@ -5,4 +5,6 @@ OK - CAPTURAR AQUELE ERRO DE CLOSED NO FRONT PEGA ELE E TOAST
 OK - sistema de fila qeee pras array de cc
 OK - fazer pilha historico de toda ssa s cccsx ja testadas pra nao passar dnv no gateway apenas por como dead
 OK - CRIAR LOGO UM AMBIANTE DE PRODUCAO COM SEU .env
+- auto poweroff serveer after session sometime after
+- 
 INDO - criar monter esquema de deploy vie git

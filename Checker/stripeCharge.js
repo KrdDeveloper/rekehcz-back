@@ -47,15 +47,17 @@ async function stripeCharge (info) {
 		info.gateway = e.STRIPE_ACC
 		info.date = new Date().toString()
 
+		return info;
+
 	} catch (error) {
 		
 		info.status = 'DEAD'
-		info.error = error.code
+		info.error = error.decline_code || error.code || error.rawType || 'unkown';
 
 		console.error(error)
 
-	} finally {
 		return info;
+
 	}
 
 
