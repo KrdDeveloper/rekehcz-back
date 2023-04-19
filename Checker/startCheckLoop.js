@@ -16,10 +16,10 @@ module.exports = async function () {
 		const infoStored = await this.checkStored(info)
 
 		if (infoStored) {
-			util.sleep(6000)
+			util.sleep(9000)
 			await this.emit('check', infoStored)
 		} else if (info.status === 'DEAD') {
-			util.sleep(6000)
+			util.sleep(9000)
 			await this.emit('check', info)
 		} else {
 			
@@ -54,7 +54,7 @@ module.exports = async function () {
 					await this.changeProxyServerIp()
 
 					// above wont work without this
-					util.sleep(6000)
+					util.sleep(9000)
 
 					try {
 

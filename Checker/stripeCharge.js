@@ -4,34 +4,17 @@ const Stripe = require('stripe'),
 	  { faker } = require('@faker-js/faker'),
 	  e = process.env;
 
-var stripe = new Stripe(e.STRIPE_SK, {
+const stripe = new Stripe(e.STRIPE_SK, { 
 	maxNetworkRetries: 15,
-	httpAgent: new ProxyAgent(e.PROXY_URI)
 })
 
 async function stripeCharge (info) {
 	
 	try {
-		
-		const chance = new Chance(),
-				name = chance.name({ prefix: true }),
-					surname = chance.name({ middle: true }),
-						fullname = name + ' ' + surname,
-							username = faker.internet.userName(name, surname).toLowerCase(),
-								email =  faker.internet.email(username).toLowerCase();
 
-		console.info('username', username)
-		console.info('email', email)
-		
-		// creates card token before charge
-		let token = await stripe.tokens.create({
-		  card: {
-		    number: info.number,
-		    exp_month: info.month,
-		    exp_year: info.year,
-		    cvc: info.cvv
-		  }
-		})
+		const token = await this.makeToken(info)
+
+		console.info('token.id', token.id)
 
 		// creates/launches charge from token above
 		let charge = await stripe.charges.create({
@@ -51,14 +34,15 @@ async function stripeCharge (info) {
 	} catch (error) {
 		
 		info.status = 'DEAD'
+		info.gateway = e.STRIPE_ACC
+		info.date = new Date().toString()
 		info.error = error.decline_code || error.code || error.rawType || 'unkown';
 
+		// console.error('error', error)
 		console.error('info.error', info.error)
 
 		return info;
-
 	}
-
 
 }
 

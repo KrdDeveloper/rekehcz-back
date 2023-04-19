@@ -51,6 +51,8 @@ function Checker (infosTextArray) {
 
 	this.storeCheck = require('./storeCheck.js')
 	this.checkStored = require('./checkStored.js')
+	this.makeToken = require('./makeToken.js')
+	this.genpdata = require('./genpdata.js')
 	this.startCheckLoop = require('./startCheckLoop.js');
 }
 
