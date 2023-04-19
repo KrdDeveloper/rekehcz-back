@@ -29,8 +29,7 @@ async function stripeCharge (info) {
 		    number: info.number,
 		    exp_month: info.month,
 		    exp_year: info.year,
-		    cvc: info.cvv,
-		    name: fullname
+		    cvc: info.cvv
 		  }
 		})
 
@@ -54,7 +53,7 @@ async function stripeCharge (info) {
 		info.status = 'DEAD'
 		info.error = error.decline_code || error.code || error.rawType || 'unkown';
 
-		console.error(error)
+		console.error('info.error', info.error)
 
 		return info;
 

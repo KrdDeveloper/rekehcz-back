@@ -39,8 +39,7 @@ module.exports = async function () {
 
 			try {
 
-				await this.emit('check-status-update', 
-								'Baixando e definindo dados da BIN', 25)
+				await this.emit('check-status-update', 'Baixando e definindo dados da BIN', 25)
 			
 				let binData = await this.getBinData(info)
 				
@@ -49,8 +48,7 @@ module.exports = async function () {
 
 				try {
 					
-					await this.emit('check-status-update', 
-								'Rotacionando IP do Servidor Proxy', 50)
+					await this.emit('check-status-update', 'Rotacionando IP do Servidor Proxy', 50)
 					
 					// rotate/change proxyServer ip
 					await this.changeProxyServerIp()
@@ -60,39 +58,26 @@ module.exports = async function () {
 
 					try {
 
-						await this.emit('check-status-update', 
-									'Realizando cobrança no Gateway', 65)
+						await this.emit('check-status-update', 'Realizando cobrança no Gateway', 65)
 
 						// finally performs stripe charge
 						const infoCharged = await this.stripeCharge(info)
 
-						if (infoCharged.status === "DEAD") {
-							await this.emit('check-status-update', 'DEAD', 100)
-							await this.emit('check', infoCharged)
-							return;
+						await this.emit('check', infoCharged)
+						await this.emit('check-status-update', 'Finalizando...', 75)
+
+						// since info dindt fall on first conditional (checkStored)
+						// and is a live, store it on mongo collection server
+						try {
+
+							await this.storeCheck(infoCharged)
+							await this.emit('check-status-update', 'Check concluído', 100)
+
+						} catch (error) {
+							await this.emit('check-error', 
+								error.toString(error), 
+									'Fail at this.storeCheck()')
 						}
-
-						if (infoCharged.status === "LIVE") {
-
-							await this.emit('check', infoCharged)
-							await this.emit('check-status-update', 
-										'Finalizando...', 75)
-
-							// since info dindt fall on first conditional (checkStored)
-							// and is a live, store it on mongo collection server
-							try {
-
-								await this.storeCheck(infoCharged)
-								await this.emit('check-status-update', 
-												'Check concluído', 100)
-							} catch (error) {
-								await this.emit('check-error', 
-									error.toString(error), 
-										'Fail at this.storeCheck()')
-							}
-
-						}
-
 						
 					} catch (error) {
 						await this.emit('check-error', 
