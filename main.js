@@ -117,6 +117,10 @@ function main (wss) {
                 }
             }
 
+            if (ev.name === 'keep') {
+                // when checker checks all infos
+                console.info('keep event dispatched from client')
+            }
         })
     });
 }
