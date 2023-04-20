@@ -1,7 +1,11 @@
 const axios = require('axios'),
 		EventEmitter = require('events'),
 			{ MongoClient } = require('mongodb'),
-				ccjs = require('creditcard.js');
+				ccjs = require('creditcard.js')
+
+const Card = require('creditcards/card'),
+		ccard = Card(['visa']),
+			expirity = require('creditcards/expiration');
 
 var checkerEmitter = new EventEmitter(),
 	e = process.env;
@@ -30,20 +34,21 @@ function Checker (infosTextArray) {
 			status: null,
 			error: null
 		}
-
+		
 		parsed.brand = ccjs.getCreditCardNameByNumber(parsed.number)
 
-		if (parsed.brand === 'Mastercard') {
-			parsed.brand = 'Master'
-		}
+		console.info('parsed.number', parsed.number)
+		console.info('parsed.brand', parsed.brand)
 
-		const numvalid = ccjs.isValid(parsed.number),
-				expvalid = ccjs.isExpirationDateValid(parsed.month, parsed.year),
-					cvvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv);
+		const numvalid = ccard.luhn(parsed.number),
+				expvalid = !expirity.isPast(parsed.month, parsed.year);
 		
-		if (!numvalid || !expvalid || !cvvalid) {
+		if (!numvalid || !expvalid) {
+			
 			parsed.status = 'DEAD'
-			parsed.error = 'Invalid'
+
+			if (numvalid) parsed.error = 'Invalid'
+			if (expvalid) parsed.error = 'Expired'
 		}
 
 		return parsed;

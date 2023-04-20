@@ -20,6 +20,10 @@ function Session () {
 
 		return remainingMinutes;
 	}
+
+	function isActive () {
+		return this.remainingMinutes > 0
+	}
 }
 
 module.exports = Session;
