@@ -14,23 +14,24 @@ app.use(cookieParser());
 
 
 
-const routekey = util.genkey(),
-		qrlink = QRCode.toString(link, 
-			{ type:'terminal' }, (err, url) => { url })
 
 var link;
+
+const routekey = util.genkey();
 
 if (e.MODE === 'test') {
 	link = `http://localhost:${e.PORT}/${routekey}`;
 }
 
 if (e.MODE === 'development') {
-	link = `https://rekehcz.herokuapp.com/${routekey}`
+	link = `https://rekehcz.herokuapp.com/${routekey}`;
 }
 
 if (e.MODE === 'live') {
-	link = `https://rekehcz-${e.BUILD}.herokuapp.com/${routekey}`
+	link = `https://rekehcz-${e.BUILD}.herokuapp.com/${routekey}`;
 }
+
+const qrlink = QRCode.toString(link, { type:'terminal' }, (err, url) => { url })
 
 app.use(`/${routekey}`, express.static(path.join(__dirname, 'public')));
 
