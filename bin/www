@@ -27,6 +27,10 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+  server.keepAliveTimeout = (60 * 1000) + 1000;
+  server.headersTimeout = (60 * 1000) + 2000;
+
 var wss = new WebSocket.Server({ server });
 
 main(wss);
