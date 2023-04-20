@@ -15,11 +15,9 @@ OK - criar monter esquema de deploy vie git
 
 insufficient_funds   -> LIVE 100% (0,00)
 try_again_later 	 -> LIVE 100% (0,00)
-
 generic_decline 	 -> 25% LIVE | 75% DEAD 
 fraudulent 			 -> 25% LIVE | 75% DEAD
 card_not_supported   -> 25% LIVE | 75% DEAD
-
 expired_card		 -> DEAD
 pickup_card			 -> DEAD
 restricted_card		 -> DEAD
