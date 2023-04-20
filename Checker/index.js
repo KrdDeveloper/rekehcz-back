@@ -5,7 +5,8 @@ const axios = require('axios'),
 
 const Card = require('creditcards/card'),
 		ccard = Card(['visa']),
-			expirity = require('creditcards/expiration');
+			expirity = require('creditcards/expiration'),
+				ccvc = require('creditcards/cvc');
 
 var checkerEmitter = new EventEmitter(),
 	e = process.env;
@@ -36,20 +37,40 @@ function Checker (infosTextArray) {
 		}
 		
 		parsed.brand = ccjs.getCreditCardNameByNumber(parsed.number)
+		parsed.month = parsed.month
+
+		// fix 4 digit year, else presume its exact two digits
+		if (parsed.year.length === 4) {
+			parsed.year = parsed.year.slice(2)
+		}
 
 		console.info('parsed.number', parsed.number)
 		console.info('parsed.brand', parsed.brand)
+		console.info('parsed.month', parsed.month)
+		console.info('parsed.year', parsed.year)
 
 		const numvalid = ccard.luhn(parsed.number),
-				expvalid = !expirity.isPast(parsed.month, parsed.year);
-		
-		if (!numvalid || !expvalid) {
-			
-			parsed.status = 'DEAD'
+			  	expvalid = ccjs.isExpirationDateValid(parsed.month, parsed.year),
+			  		cvcvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv);
 
-			if (numvalid) parsed.error = 'Invalid'
-			if (expvalid) parsed.error = 'Expired'
+		console.info('numvalid', numvalid)
+		console.info('expvalid', expvalid)
+		console.info('cvcvalid', cvcvalid)
+		
+		if (!numvalid) {
+			parsed.status = 'DEAD'
+			parsed.error = 'invalid'
 		}
+
+		if (!expvalid) {
+			parsed.status = 'DEAD'
+			parsed.error = 'expired'
+		} 
+
+		if (!cvcvalid) {
+			parsed.status = 'DEAD'
+			parsed.error = 'invalid_cvc'
+		} 
 
 		return parsed;
 	})

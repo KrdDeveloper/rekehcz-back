@@ -15,12 +15,19 @@ module.exports = async function () {
 
 		const infoStored = await this.checkStored(info)
 
+		// found on collection. used before
 		if (infoStored) {
-			util.sleep(9000)
+			
+			util.sleep(12000)
+			
 			await this.emit('check', infoStored)
+
 		} else if (info.status === 'DEAD') {
-			util.sleep(9000)
+		
+			util.sleep(12000)
+			
 			await this.emit('check', info)
+		
 		} else {
 			
 			await main.call(this)
@@ -54,7 +61,7 @@ module.exports = async function () {
 					await this.changeProxyServerIp()
 
 					// above wont work without this
-					util.sleep(9000)
+					util.sleep(12000)
 
 					try {
 

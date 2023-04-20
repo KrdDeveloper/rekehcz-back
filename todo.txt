@@ -5,8 +5,24 @@ OK - CAPTURAR AQUELE ERRO DE CLOSED NO FRONT PEGA ELE E TOAST
 OK - sistema de fila qeee pras array de cc
 OK - fazer pilha historico de toda ssa s cccsx ja testadas pra nao passar dnv no gateway apenas por como dead
 OK - CRIAR LOGO UM AMBIANTE DE PRODUCAO COM SEU .env
+OK - random faker de nomes comuns, fazer e impl / p gerar username name email etc
+OK - criar monter esquema de deploy vie git
+
 - auto poweroff serveer after session sometime after
-- random faker de nomes comuns, fazer e impl / p gerar username name email etc
+- implementar blacklist de bins antes mesmo de passar ja acusar
 - falv
-- bloqueader listas geradas/detectar
-INDO - criar monter esquema de deploy vie git
+- bloqueader listas geradas/detectar 
+
+insufficient_funds   -> LIVE 100% (0,00)
+try_again_later 	 -> LIVE 100% (0,00)
+generic_decline 	 -> 25% LIVE | 75% DEAD 
+fraudulent 			 -> 25% LIVE | 75% DEAD
+card_not_supported   -> 25% LIVE | 75% DEAD
+expired_card		 -> DEAD
+pickup_card			 -> DEAD
+restricted_card		 -> DEAD
+stolen_card   		 -> DEAD
+lost_card			 -> DEAD
+do_not_honor 		 -> DEAD
+invalid_expiry_year  -> DEAD
+invalid_expiry_month -> DEAD

@@ -3,13 +3,8 @@ const axios = require('axios')
 module.exports = async function (info) {
 	
 	let res = await axios.get(`https://bin-checker.net/api/${info.number}`),
-		brand = res.data.scheme,
-		level = res.data.level,
-		bank = res.data.bank.name
+			level = res.data.level || "unknown",
+				bank = res.data.bank.name.replaceAll(" ", '')  || "unknown";
 	
-	return {
-		brand,
-		level: level.length > 0 ? level : 'LEVEL?',
-		bank: bank.replaceAll(' ', '').length > 0 ? bank : 'BANK?'
-	}
+	return { level, bank }
 }

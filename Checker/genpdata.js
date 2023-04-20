@@ -12,6 +12,6 @@ module.exports = function () {
 	return {
 		...names,
 			fullName: `${names.firstName} ${names.lastName}`,
-			email: faker.internet.email(names.firstName, names.lastName).toLowerCase()
+				email: faker.internet.email(names.firstName, names.lastName).toLowerCase()
 	}
 }

@@ -38,10 +38,12 @@ module.exports = async function (info) {
 	    exp_year: info.year,
 	    cvc: info.cvv,
 	    name: pdata.fullName,
-	    address_country: 'BR',
-	    address_state: "Brasil"
+	    address_country: 'BR'
 	  }
 	})
 
-	return token;
+	return { 
+		token, 
+		receipt_email: pdata.email 
+	}
 }
