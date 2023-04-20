@@ -12,10 +12,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+
 const routekey = util.genkey(),
-		link = `http://csliathz.xyz:${e.PORT}/${routekey}`,
-			qrlink = QRCode.toString(link, 
-				{ type:'terminal' }, (err, url) => { url })
+		qrlink = QRCode.toString(link, 
+			{ type:'terminal' }, (err, url) => { url })
+
+var link;
+
+if (e.MODE === 'test') {
+	link = `http://localhost:${e.PORT}/${routekey}`;
+}
+
+if (e.MODE === 'development') {
+	link = `https://rekehcz.herokuapp.com/${routekey}`
+}
+
+if (e.MODE === 'live') {
+	link = `https://rekehcz-${e.BUILD}.herokuapp.com/${routekey}`
+}
 
 app.use(`/${routekey}`, express.static(path.join(__dirname, 'public')));
 
