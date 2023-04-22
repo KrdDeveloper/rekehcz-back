@@ -22,8 +22,7 @@ module.exports = async function (info) {
 	});
 	
 	const stripe = await new Stripe(e.STRIPE_PK, { 
-		maxNetworkRetries: 15,
-		httpAgent: proxyAgent 
+		maxNetworkRetries: 15
 	});
 
 	const pdata = this.genpdata();

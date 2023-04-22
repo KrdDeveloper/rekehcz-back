@@ -75,6 +75,7 @@ module.exports = async function () {
 
 						// since info dindt fall on first conditional (checkStored)
 						// and is a live, store it on mongo collection server
+						
 						try {
 
 							await this.storeCheck(infoCharged)

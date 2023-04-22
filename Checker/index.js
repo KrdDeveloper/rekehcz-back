@@ -4,30 +4,30 @@ const axios = require('axios'),
 				ccjs = require('creditcard.js')
 
 const Card = require('creditcards/card'),
-		ccard = Card(['visa']),
-			expirity = require('creditcards/expiration'),
-				ccvc = require('creditcards/cvc');
+		ccard = Card(['visa']);
 
 var checkerEmitter = new EventEmitter(),
-	e = process.env;
+		e = process.env;
 
 function Checker (infosTextArray) {
-
-	this.mongoClient = new MongoClient(e.MONGO_STRING);
-	this.mongoClient.connect()
-
+	
+	// defines native class emitters
 	this.on = checkerEmitter.on
 	this.emit = checkerEmitter.emit
 
+	// makes mongodb client/connector
+	this.mongoClient = new MongoClient(e.MONGO_STRING);
+	this.mongoClient.connect()
+
 	this.infos = infosTextArray.map(infoText => {
 		
-		let joined = infoText.split('|')
+		let split = infoText.split('|')
 
 		let parsed = {
-			number: joined[0],
-			month: joined[1],
-			year: joined[2],
-			cvv: joined[3],
+			number: split[0],
+			month: split[1],
+			year: split[2],
+			cvv: split[3],
 			brand: null,
 			bank: null,
 			level: null,
@@ -37,7 +37,6 @@ function Checker (infosTextArray) {
 		}
 		
 		parsed.brand = ccjs.getCreditCardNameByNumber(parsed.number)
-		parsed.month = parsed.month
 
 		// fix 4 digit year, else presume its exact two digits
 		if (parsed.year.length === 4) {
@@ -49,13 +48,20 @@ function Checker (infosTextArray) {
 		console.info('parsed.month', parsed.month)
 		console.info('parsed.year', parsed.year)
 
+		// offline check spetaculum
+		// -> online check is when it falls here
+		
 		const numvalid = ccard.luhn(parsed.number),
-			  	expvalid = ccjs.isExpirationDateValid(parsed.month, parsed.year),
-			  		cvcvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv);
+			  expvalid = ccjs.isExpirationDateValid(parsed.month, parsed.year),
+			  cvcvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv);
 
 		console.info('numvalid', numvalid)
 		console.info('expvalid', expvalid)
 		console.info('cvcvalid', cvcvalid)
+		
+		// if pass across those 3 ifs
+		// it success at all offline tests
+		// ...info sintaxe is ok.
 		
 		if (!numvalid) {
 			parsed.status = 'DEAD'
@@ -79,7 +85,8 @@ function Checker (infosTextArray) {
 	this.checkStored = require('./checkStored.js')
 	this.makeToken = require('./makeToken.js')
 	this.genpdata = require('./genpdata.js')
-	this.startCheckLoop = require('./startCheckLoop.js');
+	this.startCheckLoop = require('./startCheckLoop.js')
+	this.resurrectResolve = require('./resurrectResolve.js')
 }
 
 Checker.prototype.getBinData = require('./getBinData.js')

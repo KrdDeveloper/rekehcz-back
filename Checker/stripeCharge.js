@@ -1,7 +1,4 @@
 const Stripe = require('stripe'),
-	  ProxyAgent = require('https-proxy-agent'),
-	  Chance = require('chance'),
-	  { faker } = require('@faker-js/faker'),
 	  e = process.env;
 
 const stripe = new Stripe(e.STRIPE_SK, { 
@@ -12,7 +9,7 @@ async function stripeCharge (info) {
 	
 	try {
 
-		let token = await this.makeToken(info),
+		const token = await this.makeToken(info),
 				tokenid = token.token.id,
 					receipt_email = token.receipt_email;
 
@@ -21,15 +18,15 @@ async function stripeCharge (info) {
 		
 		// creates/launches charge from token above
 		let charge = await stripe.charges.create({
-		  amount: util.genprice(50, 150),
-		  currency: 'brl',
-		  source: tokenid,
-		  description: 'Micro-service appliance',
-		  receipt_email
+			amount: util.genprice(50, 150),
+			currency: 'brl',
+			source: tokenid,
+			receipt_email,
+			description: 'Micro-service appliance'
 		})
 
-		info.charge = charge.amount
 		info.status = 'LIVE'
+		info.charge = charge.amount
 		info.gateway = e.STRIPE_ACC
 		info.date = new Date().toString()
 
@@ -37,13 +34,19 @@ async function stripeCharge (info) {
 
 	} catch (error) {
 		
+		// online check
 		info.status = 'DEAD'
 		info.gateway = e.STRIPE_ACC
 		info.date = new Date().toString()
 		info.error = error.decline_code || error.code || error.rawType || 'unkown';
 
-		// console.error('error', error)
-		console.error('info.error', info.error)
+		// this log is very important
+		// dont ever remove it else
+		// you will see why its important :)
+		console.info('info.error', info.error)
+
+		// try to resurrect the DEAD info
+		this.resurrectResolve(info);
 
 		return info;
 	}
