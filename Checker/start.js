@@ -91,27 +91,31 @@ module.exports = async function () {
 							await this.emit('check-status-update', 'Check concluído', 100)
 
 						} catch (error) {
-							await this.emit('check-error', 
+							await this.emit('error', 
 								error.toString(error), 
-									'Fail at this.storeCheck()')
+									'Fail at this.storeCheck()',
+										info)
 						}
 						
 					} catch (error) {
-						await this.emit('check-error', 
+						await this.emit('error', 
 							error.toString(error), 
-								'Fail at this.stripeCharge()')
+								'Fail at this.stripeCharge()',
+									info)
 					}
 
 				} catch (error) {
-					await this.emit('check-error', 
+					await this.emit('error', 
 						error.toString(error), 
-							'Fail at this.changeProxyServerIp()')
+							'Fail at this.changeProxyServerIp()',
+								info)
 				}
 
 			} catch (error) {
-				await this.emit('check-error', 
+				await this.emit('error', 
 						error.toString(), 
-							'Fail at this.getBinData()')
+							'Fail at this.getBinData()',
+								info)
 			}
 
 		}

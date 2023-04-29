@@ -70,6 +70,14 @@ function main (wss) {
                 // ev.data = array of infocc text
                 let checker = global.checker = new Checker(ev.data)
                 
+                // handles check error (not charge error)
+                checker.on('error', (error, errmsg, infoMissed) => {
+                    ws.send(JSON.stringify({ 
+                        name: 'error', 
+                        data: { error, message: errmsg, infoMissed }
+                    }))
+                })
+
                 // handles each info checked
                 checker.on('check', infoParsed => {
                     ws.send(JSON.stringify({ 
@@ -82,14 +90,6 @@ function main (wss) {
                     ws.send(JSON.stringify({
                         name: 'check-status-update',
                         data: { status, progress }
-                    }))
-                })
-
-                // handles check error
-                checker.on('check-error', (error, errmsg) => {
-                    ws.send(JSON.stringify({ 
-                        name: 'check-error', 
-                        data: { error, message: errmsg }
                     }))
                 })
 

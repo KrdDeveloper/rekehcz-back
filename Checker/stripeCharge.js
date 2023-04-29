@@ -43,6 +43,7 @@ async function stripeCharge (info) {
 		// this log is very important
 		// dont ever remove it else
 		// you will see why its important :)
+		console.info('stripe native Charge error (resolving as normal check)')
 		console.info('info.error', info.error)
 
 		// try to resurrect the DEAD info
