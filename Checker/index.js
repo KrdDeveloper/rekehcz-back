@@ -51,7 +51,7 @@ function Checker (infosTextArray) {
 		// offline check spetaculum
 		// -> online check is when it falls here
 		
-		const numvalid = ccard.luhn(parsed.number) || parsed.brand === 'Credit card is invalid!',
+		const numvalid = ccard.luhn(parsed.number),
 			  expvalid = ccjs.isExpirationDateValid(parsed.month, parsed.year),
 			  cvcvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv);
 
@@ -63,7 +63,7 @@ function Checker (infosTextArray) {
 		// it success at all offline tests
 		// ...info sintaxe is ok.
 		
-		if (!numvalid) {
+		if (!numvalid || parsed.brand === 'Credit card is invalid!') {
 			parsed.status = 'DEAD'
 			parsed.error = 'invalid'
 		}

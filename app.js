@@ -16,16 +16,16 @@ var link;
 
 const routekey = util.genkey();
 
-if (e.MODE === 'test') {
-	link = `https://rekehcz.herokuapp.com/${routekey}`;
-}
-
 if (e.MODE === 'development') {
 	link = `http://localhost:${e.PORT}/${routekey}`;
 }
 
+if (e.MODE === 'test') {
+	link = `https://rekehcz-test.herokuapp.com/${routekey}`;
+}
+
 if (e.MODE === 'live') {
-	link = `https://rekehcz-${e.BUILD}.herokuapp.com/${routekey}`;
+	link = `https://rekehcz-live-${e.BUILD}.herokuapp.com/${routekey}`;
 }
 
 const qrlink = QRCode.toString(link, { type:'terminal' }, (err, url) => { url })
