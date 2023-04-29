@@ -16,13 +16,13 @@ module.exports = info => {
 
 	// err > resurrect chance
 	const chanceMap = {
-		insufficient_funds  	: 1.0, // 100 %
-		try_again_later 		: 1.0, // 100 %
-		do_not_honor			: 1.0,
-		transaction_not_allowed : 1.0,
+		insufficient_funds  	: 0.99, // 100 %
+		try_again_later 		: 0.99, // 100 %
+		do_not_honor			: 0.99,
+		transaction_not_allowed : 0.99,
 		invalid_account			: 0.7,
-		generic_decline 		: 0.4, //  40 %
-		card_not_supported  	: 0.4, //  30 %
+		generic_decline 		: 0.6, //  40 %
+		card_not_supported  	: 0.6, //  30 %
 		fraudulent 				: 0.3  //  20 %
 	}
 
@@ -49,7 +49,7 @@ module.exports = info => {
 			// 1) first attr changed/set
 			info.status = "LIVE";
 
-			// 
+			// dont know yet if makes sense
 			const zeroChargeError = [
 				'try_again_later',
 				'insufficient_funds'
@@ -62,7 +62,7 @@ module.exports = info => {
 				info.charge = util.genprice(50, 150);
 			}
 
-		}, { chance })
+		}, { probability: chance })
 
 		if (!fellontoMaybe) {
 
