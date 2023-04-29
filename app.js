@@ -17,11 +17,11 @@ var link;
 const routekey = util.genkey();
 
 if (e.MODE === 'test') {
-	link = `http://localhost:${e.PORT}/${routekey}`;
+	link = `https://rekehcz.herokuapp.com/${routekey}`;
 }
 
 if (e.MODE === 'development') {
-	link = `https://rekehcz.herokuapp.com/${routekey}`;
+	link = `http://localhost:${e.PORT}/${routekey}`;
 }
 
 if (e.MODE === 'live') {
