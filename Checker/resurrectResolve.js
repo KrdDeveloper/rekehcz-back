@@ -16,11 +16,14 @@ module.exports = info => {
 
 	// err > resurrect chance
 	const chanceMap = {
-		insufficient_funds  : 1.0, // 100 %
-		try_again_later 	: 1.0, // 100 %
-		generic_decline 	: 0.4, //  40 %
-		card_not_supported  : 0.3, //  30 %
-		fraudulent 			: 0.2  //  20 %
+		insufficient_funds  	: 1.0, // 100 %
+		try_again_later 		: 1.0, // 100 %
+		do_not_honor			: 1.0,
+		transaction_not_allowed : 1.0,
+		invalid_account			: 0.7,
+		generic_decline 		: 0.4, //  40 %
+		card_not_supported  	: 0.4, //  30 %
+		fraudulent 				: 0.3  //  20 %
 	}
 
 	// possible values 1.0, 0.4, 0.3, 0.2 
