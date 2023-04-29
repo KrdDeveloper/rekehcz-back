@@ -1,12 +1,12 @@
 const Stripe = require('stripe'),
 	  e = process.env;
 
-const stripe = new Stripe(e.STRIPE_SK, { 
-	maxNetworkRetries: 15,
-})
-
 async function stripeCharge (info) {
 	
+	const stripe = new Stripe(e.STRIPE_SK, { 
+		maxNetworkRetries: 15
+	})
+
 	try {
 
 		const token = await this.makeToken(info),

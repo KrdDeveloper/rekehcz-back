@@ -13,16 +13,22 @@ module.exports = async function () {
             return;
         }
 
-		const infoStored = await this.checkStored(info)
+		const infoStored = await this.checkStored(info);
 
 		// found on collection. used before
 		if (infoStored) {
 			
+			console.info(`Info already checked before`)
+			console.info(`Returning stored checked info`)
+
 			util.sleep(12000)
 			
 			await this.emit('check', infoStored)
 
 		} else if (info.status === 'DEAD') {
+
+			console.info(`Info is DEAD by Validity check at incoming`)
+			console.info('Returning it as it is')
 		
 			util.sleep(12000)
 			
@@ -39,6 +45,9 @@ module.exports = async function () {
 		}
 
 		async function main () {
+
+			console.info(`Info is neither Invalid nor DEAD from Validity`)
+			console.info(`Performing check on the gateway`)
 
 			if (info.month.length === 4) {
 				info.month = info.month.slice(2)
@@ -104,6 +113,7 @@ module.exports = async function () {
 						error.toString(), 
 							'Fail at this.getBinData()')
 			}
+
 		}
 
 		// if is the last info checked

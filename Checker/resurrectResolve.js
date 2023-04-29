@@ -31,7 +31,6 @@ module.exports = info => {
 		// from now...
 		// info's error is passible of resurrect
 		// but it wont depending on it falls in chance
-
 		console.info('info error chance found:', err)
 		console.info('expect it now fall on resurrect chance or not')
 

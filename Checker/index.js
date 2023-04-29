@@ -51,7 +51,7 @@ function Checker (infosTextArray) {
 		// offline check spetaculum
 		// -> online check is when it falls here
 		
-		const numvalid = ccard.luhn(parsed.number),
+		const numvalid = ccard.luhn(parsed.number) || parsed.brand === 'Credit card is invalid!',
 			  expvalid = ccjs.isExpirationDateValid(parsed.month, parsed.year),
 			  cvcvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv);
 
@@ -81,11 +81,11 @@ function Checker (infosTextArray) {
 		return parsed;
 	})
 
+	this.start = require('./start.js')
 	this.storeCheck = require('./storeCheck.js')
 	this.checkStored = require('./checkStored.js')
 	this.makeToken = require('./makeToken.js')
 	this.genpdata = require('./genpdata.js')
-	this.startCheckLoop = require('./startCheckLoop.js')
 	this.resurrectResolve = require('./resurrectResolve.js')
 }
 

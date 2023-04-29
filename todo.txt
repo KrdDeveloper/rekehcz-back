@@ -8,10 +8,12 @@ OK - CRIAR LOGO UM AMBIANTE DE PRODUCAO COM SEU .env
 OK - random faker de nomes comuns, fazer e impl / p gerar username name email etc
 OK - criar monter esquema de deploy vie git
 
+OK - bloqueader listas geradas/detectar 
+INDO - BUY IPROXY <-----------
+
 - auto poweroff serveer after session sometime after
 - implementar blacklist de bins antes mesmo de passar ja acusar
-- bloqueader listas geradas/detectar 
-- BUY IPROXY <-----------
+
 
 - TEM QUE ROTACIONAR A KEY DA ACC DO STRIPE SIM
 		> APROVACOES CONSECUTIVAS QUEIMAM E BANE O GATEWAY
@@ -22,13 +24,11 @@ OK - criar monter esquema de deploy vie git
 
 OK - FLVS \/
 
-insufficient_funds   d LIVE 100% (0,00)
-try_again_later 	 d LIVE 100% (0,00)
-
-generic_decline 	 d 45% LIVE | 55% DEAD 
-card_not_supported   d 35% LIVE | 65% DEAD
+insufficient_funds   -> LIVE 100% (0,00)
+try_again_later 	 -> LIVE 100% (0,00)
+generic_decline 	 -> 45% LIVE | 55% DEAD 
+card_not_supported   -> 35% LIVE | 65% DEAD
 fraudulent 			 -> 25% LIVE | 75% DEAD
-
 expired_card		 -> DEAD
 pickup_card			 -> DEAD
 restricted_card		 -> DEAD

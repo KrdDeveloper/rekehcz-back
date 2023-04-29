@@ -103,7 +103,7 @@ function main (wss) {
                 })
 
                 // starts checker
-                checker.startCheckLoop()
+                checker.start()
 
                 // --------------------------------
                 // ----------- main algorithm - end
