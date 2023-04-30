@@ -7,9 +7,13 @@ OK - fazer pilha historico de toda ssa s cccsx ja testadas pra nao passar dnv no
 OK - CRIAR LOGO UM AMBIANTE DE PRODUCAO COM SEU .env
 OK - random faker de nomes comuns, fazer e impl / p gerar username name email etc
 OK - criar monter esquema de deploy vie git
+OK - BUY IPROXY <-----------
 
-OK - bloqueader listas geradas/detectar 
-INDO - BUY IPROXY <-----------
+- Tutorial de uso completo
+OK - Corrigir timeout do ipchange
+OK - ui das missed melhorar
+
+- bloqueader listas geradas/detectar 
 
 - auto poweroff serveer after session sometime after
 - implementar blacklist de bins antes mesmo de passar ja acusar

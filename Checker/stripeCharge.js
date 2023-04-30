@@ -10,18 +10,15 @@ async function stripeCharge (info) {
 	try {
 
 		const token = await this.makeToken(info),
-				tokenid = token.token.id,
-					receipt_email = token.receipt_email;
+				tokenid = token.token.id
 
 		console.info('tokenid', tokenid)
-		console.info('receipt_email', receipt_email)
 		
 		// creates/launches charge from token above
 		let charge = await stripe.charges.create({
 			amount: util.genprice(50, 150),
 			currency: 'brl',
 			source: tokenid,
-			receipt_email,
 			description: 'Micro-service appliance'
 		})
 

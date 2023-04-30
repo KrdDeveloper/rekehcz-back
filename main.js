@@ -9,7 +9,7 @@ function main (wss) {
     // handles new websocket incoming connections
     // ------------------------------------------
 
-    wss.on('connection', (ws, message) => {
+    wss.on('connection', (ws, req) => {
 
         // enforces single connection by keeping the first only
         // ... and blocking any other
@@ -21,7 +21,7 @@ function main (wss) {
 
         // if global.session is set
         if (!global.session) {
-             global.session = new Session()
+             global.session = new Session(req)
         }
 
         ws.send(JSON.stringify({

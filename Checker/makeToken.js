@@ -41,8 +41,5 @@ module.exports = async function (info) {
 	  }
 	})
 
-	return { 
-		token, 
-		receipt_email: pdata.email 
-	}
+	return { token }
 }

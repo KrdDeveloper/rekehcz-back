@@ -35,19 +35,14 @@ module.exports = async function () {
 			await this.emit('check', info)
 		
 		} else {
-			
-			await main.call(this)
-
-			// if is the last info checked
-			if (info.number === this.infos[this.infos.length - 1].number) {
-				await this.emit('stop')
-			}
-		}
-
-		async function main () {
 
 			console.info(`Info is neither Invalid nor DEAD from Validity`)
 			console.info(`Performing check on the gateway`)
+			
+			await main.call(this)
+		}
+
+		async function main () {
 
 			if (info.month.length === 4) {
 				info.month = info.month.slice(2)
