@@ -22,7 +22,7 @@ if (e.MODE === 'development') {
 }
 
 if (e.MODE === 'test') {
-	link = `https://rekehcz-test.herokuapp.com/${state.routekey}`;
+	link = `https://rekehcz-test-live.herokuapp.com/${state.routekey}`;
 }
 
 if (e.MODE === 'live') {
