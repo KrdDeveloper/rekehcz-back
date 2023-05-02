@@ -21,7 +21,7 @@ module.exports = info => {
 		do_not_honor			: 0.60,
 		transaction_not_allowed : 0.99,
 		invalid_account			: 0.7,
-		generic_decline 		: 0.3, //  40 %
+		generic_decline 		: 0.15, //  40 %
 		card_not_supported  	: 0.5, //  30 %
 		fraudulent 				: 0.0  //  0 %
 	}
