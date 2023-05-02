@@ -23,7 +23,7 @@ module.exports = info => {
 		invalid_account			: 0.7,
 		generic_decline 		: 0.15, //  40 %
 		card_not_supported  	: 0.5, //  30 %
-		fraudulent 				: 0.0  //  0 %
+		fraudulent 				: 0.14  //  0 %
 	}
 
 	// possible values 1.0, 0.4, 0.3, 0.2 
