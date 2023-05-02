@@ -4,6 +4,7 @@ const moment = require('moment'),
 
 function Session (req) {
 	
+	this.expired = false;
 	this.routekey = global.state.routekey;
 	this.remoteAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 	this.timeStart = moment()
@@ -11,7 +12,13 @@ function Session (req) {
 	this.remainingMinutes = getRemainingMinutes.call(this)
 
 	setInterval(async () => {
+		
 		this.remainingMinutes = getRemainingMinutes.call(this)
+
+		if (this.remainingMinutes < -5) {
+			this.expired = true;
+		}
+	
 	}, 1000)
 
 	function getRemainingMinutes () {

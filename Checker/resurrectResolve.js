@@ -18,12 +18,12 @@ module.exports = info => {
 	const chanceMap = {
 		insufficient_funds  	: 0.99, // 100 %
 		try_again_later 		: 0.99, // 100 %
-		do_not_honor			: 0.99,
+		do_not_honor			: 0.60,
 		transaction_not_allowed : 0.99,
 		invalid_account			: 0.7,
-		generic_decline 		: 0.6, //  40 %
-		card_not_supported  	: 0.6, //  30 %
-		fraudulent 				: 0.3  //  20 %
+		generic_decline 		: 0.4, //  40 %
+		card_not_supported  	: 0.5, //  30 %
+		fraudulent 				: 0.2  //  20 %
 	}
 
 	// possible values 1.0, 0.4, 0.3, 0.2 

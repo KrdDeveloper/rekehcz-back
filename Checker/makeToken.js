@@ -1,8 +1,8 @@
 const Stripe = require('stripe'),
-	  request = require('request-promise'),
-	  ProxyAgent = require('https-proxy-agent'),
-	  { faker } = require('@faker-js/faker'),
-	  e = process.env;
+	  	request = require('request-promise'),
+	  		ProxyAgent = require('https-proxy-agent'),
+	  			{ faker } = require('@faker-js/faker'),
+	  				e = process.env;
 
 module.exports = async function (info) {
 
@@ -25,18 +25,12 @@ module.exports = async function (info) {
 		maxNetworkRetries: 15
 	});
 
-	const pdata = this.genpdata();
-
-	console.info('pdata.email', pdata.email)
-	console.info('pdata.fullName', pdata.fullName)
-			
 	let token = await stripe.tokens.create({
 	  card: {
 	    number: info.number,
 	    exp_month: info.month,
 	    exp_year: info.year,
 	    cvc: info.cvv,
-	    name: pdata.fullName,
 	    address_country: 'BR'
 	  }
 	})

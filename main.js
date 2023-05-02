@@ -95,7 +95,8 @@ function main (wss) {
 
                 // when checker checks all infos
                 checker.on('stop', stopmsg => {
-                    state.isChecking = false;    
+                    state.isChecking = false;
+                    console.info('Stopping checker → ', stopmsg)   
                     ws.send(JSON.stringify({ 
                         name: 'stop', 
                         data: { message: stopmsg }
@@ -110,16 +111,28 @@ function main (wss) {
                 // --------------------------------
             }
 
-            if (ev.name === 'stop-checks') {
-                if (global.checker) {
-                    await global.checker.emit('stop', 
-                        'Cancelamento de processo solicitado')
-                }
-            }
-
+            // assures connection stability btw front/back
             if (ev.name === 'keep') {
                 // when checker checks all infos
                 console.infoff('keep event dispatched from client')
+            }
+
+            // when user clicks front-end button to stop checks
+            if (ev.name === 'stop-checks') {
+                if (global.checker) {
+                    await global.checker.emit('stop', 'Cancelamento de processo solicitado')
+                }
+            }
+
+        })
+        
+        // -------------------------------------------------
+        // connection is close, usually by user exit page/tab
+        // -------------------------------------------------
+        
+        ws.on('close', async (event) => {
+            if (global.checker) {
+                await global.checker.emit('stop', 'Cancelamento de processo por conexão encerrada')
             }
         })
     });

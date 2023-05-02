@@ -7,10 +7,12 @@ async function stripeCharge (info) {
 		maxNetworkRetries: 15
 	})
 
+	const pdata = this.genpdata();
+
 	try {
 
 		const token = await this.makeToken(info),
-				tokenid = token.token.id
+			  tokenid = token.token.id  
 
 		console.info('tokenid', tokenid)
 		
@@ -26,6 +28,9 @@ async function stripeCharge (info) {
 		info.charge = charge.amount
 		info.gateway = e.STRIPE_ACC
 		info.date = new Date().toString()
+
+		// inserts pdata embded with info
+		Object.assign(info, pdata)
 
 		return info;
 
@@ -45,6 +50,11 @@ async function stripeCharge (info) {
 
 		// try to resurrect the DEAD info
 		this.resurrectResolve(info);
+
+		// inserts pdata embded with info
+		if (info.status === "LIVE") {
+			Object.assign(info, pdata)
+		}
 
 		return info;
 	}

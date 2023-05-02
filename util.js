@@ -27,5 +27,11 @@ module.exports = {
 		global.util.genid = () => {
 			return Math.random().toString(36).slice(2, 7);
 		}
+
+		global.util.pad = (num, size) => {
+		    num = num.toString();
+		    while (num.length < size) num = "0" + num;
+		    return num;
+		}
 	}
 }
