@@ -80,9 +80,12 @@ function main (wss) {
 
                 // handles each info checked
                 checker.on('check', infoParsed => {
+
+                    console.info('+ info checked')                    
+
                     ws.send(JSON.stringify({ 
                         name: 'check', 
-                        data: infoParsed 
+                        data: infoParsed
                     }))
                 })
 
@@ -129,7 +132,7 @@ function main (wss) {
         // -------------------------------------------------
         // connection is close, usually by user exit page/tab
         // -------------------------------------------------
-        
+
         ws.on('close', async (event) => {
             if (global.checker) {
                 await global.checker.emit('stop', 'Cancelamento de processo por conexão encerrada')

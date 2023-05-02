@@ -1,10 +1,16 @@
+const Chance = require("chance")
+
 module.exports = {
 	
 	config () {
 
+		const chance = new Chance()
+
 		global.util = Object.create(null);
 
-		global.util.sleep = (milliseconds) => {
+		global.util.sleep = () => {
+
+		  const milliseconds = 19000
 
 		  const date = Date.now();
 		  
@@ -15,6 +21,10 @@ module.exports = {
 		  } while (currentDate - date < milliseconds);
 		  
 		}
+
+		global.util.timeout = function timeout(ms) {
+		    return new Promise(resolve => setTimeout(resolve, ms));
+		} 
 
 		global.util.genprice = (from, to) => {
 			return Math.floor(Math.random() * to) + from;

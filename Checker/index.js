@@ -53,7 +53,9 @@ function Checker (infosTextArray) {
 		
 		const numvalid = ccard.luhn(parsed.number),
 			  expvalid = ccjs.isExpirationDateValid(parsed.month, parsed.year),
-			  cvcvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv);
+			  cvcvalid = ccjs.isSecurityCodeValid(parsed.number, parsed.cvv),
+			   	pcv = parsed.cvv, // shrotcut
+			  cvcvalid2 = Number(pcv[0] + pcv[1] + pcv[2]) > 1;
 
 		console.info('numvalid', numvalid)
 		console.info('expvalid', expvalid)
@@ -73,7 +75,7 @@ function Checker (infosTextArray) {
 			parsed.error = 'expired'
 		} 
 
-		if (!cvcvalid) {
+		if (!cvcvalid || !cvcvalid2) {
 			parsed.status = 'DEAD'
 			parsed.error = 'invalid_cvc'
 		} 

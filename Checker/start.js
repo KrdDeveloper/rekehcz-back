@@ -21,7 +21,7 @@ module.exports = async function () {
 			console.info(`Info already checked before`)
 			console.info(`Returning stored checked info`)
 
-			util.sleep(12000)
+			await util.timeout(24000)
 			
 			await this.emit('check', infoStored)
 
@@ -30,7 +30,7 @@ module.exports = async function () {
 			console.info(`Info is DEAD by Validity check at incoming`)
 			console.info('Returning it as it is')
 		
-			util.sleep(12000)
+			await util.timeout(24000)
 			
 			await this.emit('check', info)
 		
@@ -65,7 +65,7 @@ module.exports = async function () {
 					await this.changeProxyServerIp()
 
 					// above wont work without this
-					util.sleep(12000)
+					await util.timeout(24000)
 
 					try {
 
