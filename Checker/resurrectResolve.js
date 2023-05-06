@@ -18,10 +18,10 @@ module.exports = info => {
 	const chanceMap = {
 		insufficient_funds  	: 0.99, // 100 %
 		try_again_later 		: 0.99, // 100 %
-		do_not_honor			: 0.60,
 		transaction_not_allowed : 0.99,
-		invalid_account			: 0.7,
-		generic_decline 		: 0.15, //  40 %
+		do_not_honor			: 0.30,
+		invalid_account			: 0.3,
+		generic_decline 		: 0.5, //  40 % // REMEMBER this error is = BLOCK (by stripe radar)
 		card_not_supported  	: 0.5, //  30 %
 		fraudulent 				: 0.1  //  0 %
 	}
@@ -52,7 +52,8 @@ module.exports = info => {
 			// dont know yet if makes sense
 			const zeroChargeError = [
 				'try_again_later',
-				'insufficient_funds'
+				'insufficient_funds',
+				'transaction_not_allowed'
 			].includes(err)
 
 			// 2) second attr changed/set 

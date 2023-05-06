@@ -6,22 +6,22 @@ const Stripe = require('stripe'),
 
 module.exports = async function (info) {
 
-	const proxyAgent = new ProxyAgent(e.PROXY_URI, {
+	const httpAgent = new ProxyAgent(e.PROXY_URI, {
 		headers: {
 			"User-Agent": faker.internet.userAgent(),
 			"Accept-Encoding": "gzip, deflate, br",
-			"Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+			"Accept-Language": "pt-PT,pt-BR;q=0.9,en;q=0.8",
 			"Device-Memory": faker.helpers.arrayElement(['8', '4', '2', '1', '3']),
 			"Downlink": "4",
 			"Dpr": "1.25",
 			"Etc":"4g",
 			"Referer": "https://www.google.com/",
-			"Rtt": "150",
-			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+			"Rtt": "150"
 		}
 	});
 	
 	const stripe = await new Stripe(e.STRIPE_PK, { 
+		httpAgent,
 		maxNetworkRetries: 15
 	});
 
@@ -30,8 +30,7 @@ module.exports = async function (info) {
 	    number: info.number,
 	    exp_month: info.month,
 	    exp_year: info.year,
-	    cvc: info.cvv,
-	    address_country: 'BR'
+	    cvc: info.cvv
 	  }
 	})
 
