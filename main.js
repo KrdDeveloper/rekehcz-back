@@ -133,11 +133,12 @@ function main (wss) {
         // connection is close, usually by user exit page/tab
         // -------------------------------------------------
 
-        ws.on('close', async (event) => {
-            if (global.checker) {
-                await global.checker.emit('stop', 'Cancelamento de processo por conexão encerrada')
-            }
-        })
+        // ws.on('close', async (event) => {
+        //     if (global.checker) {
+        //         await global.checker.emit('stop', 'Cancelamento de processo por conexão encerrada')
+        //     }
+        // })
+        
     });
 }
 
