@@ -3,8 +3,9 @@ const Stripe = require('stripe'),
 
 async function stripeCharge (info) {
 	
-	const stripe = new Stripe(e.STRIPE_SK, { 
-		maxNetworkRetries: 15
+	const stripe = new Stripe(e.STRIPE_SK2, { 
+		maxNetworkRetries: 15,
+		timeout: 3000
 	})
 
 	const pdata = this.genpdata();
