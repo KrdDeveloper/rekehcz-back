@@ -20,7 +20,7 @@ module.exports = async function (info) {
 		}
 	});
 	
-	const stripe = await new Stripe(e.STRIPE_PK, { 
+	const stripe = await new Stripe(e.STRIPE_SK, { 
 		httpAgent,
 		maxNetworkRetries: 15
 	});
